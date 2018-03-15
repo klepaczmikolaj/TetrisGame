@@ -43,45 +43,32 @@ public class DisplayWindow extends JFrame implements KeyListener{
     @Override
     public void keyPressed(KeyEvent e) {
         int ch = e.getKeyCode();
-        if(ch == 37 && !isTouchingLeftWall() && !isTouchingBedFromLeft()){
+        if(ch == 37 && !gameBoard.isTouchingLeftWall() && !gameBoard.isTouchingBedFromLeft()){
             gameBoard.moveBlockLeft();
             gameBoard.updateBoard();
             repaint();
         }
-        else if(ch == 39 && !isTouchingRightWall() && !isTouchingBedFromRight()){
+        else if(ch == 39 && !gameBoard.isTouchingRightWall() && !gameBoard.isTouchingBedFromRight()){
             gameBoard.moveBlockRight();
             gameBoard.updateBoard();
             repaint();
         }
-    }
-    
-    private boolean isTouchingLeftWall(){
-        for(Coords iter : gameBoard.block.body){
-            if(iter.x == 0)
-                return true;
+        else if(ch == 38 && !unableToRotate()){
+            gameBoard.block.rotate();
+            gameBoard.updateBoard();
+            repaint();
         }
-        return false;
-    }
-    
-    private boolean isTouchingRightWall(){
-        for(Coords iter : gameBoard.block.body){
-            if(iter.x == gameBoard.numberOfElements - 1)
-                return true;
+        else if(ch == 40 && !gameBoard.isTouchingBedDown()){
+            gameBoard.moveBlockDown();
+            gameBoard.updateBoard();
+            repaint();
         }
-        return false;
+    }
+    //TODO
+    private boolean unableToRotate(){
+        return gameBoard.isTouchingRightWall() && 
+                (gameBoard.block.direction == Block.DIR.UP || gameBoard.block.direction == Block.DIR.DOWN);
     }
     
-    private boolean isTouchingBedFromLeft(){
-        for(Coords iter : gameBoard.block.body)
-            if(gameBoard.bed[iter.x - 1][iter.y] == true)
-                return true;
-        return false;
-    }
     
-    private boolean isTouchingBedFromRight(){
-        for(Coords iter : gameBoard.block.body)
-            if(gameBoard.bed[iter.x + 1][iter.y] == true)
-                return true;
-        return false;
-}
 }
