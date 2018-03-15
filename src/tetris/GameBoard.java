@@ -1,8 +1,6 @@
 
 package tetris;
 
-import java.util.Iterator;
-import java.util.Random;
 
 /**
  *
@@ -14,7 +12,6 @@ public class GameBoard {
     public int numberOfElements;
     public int elementSize;
     public Block block;
-    private final Random ran = new Random();
     
     GameBoard(int numberOfElements, int elementSize){
         this.numberOfElements = numberOfElements;
@@ -114,5 +111,36 @@ public class GameBoard {
             iter.x++;
     }
     
+    public boolean isTouchingLeftWall(){
+        for(Coords iter : block.body){
+            if(iter.x == 0)
+                return true;
+        }
+        return false;
+    }
+    
+    public boolean isTouchingRightWall(){
+        for(Coords iter : block.body){
+            if(iter.x == numberOfElements - 1)
+                return true;
+        }
+        return false;
+    }
+    
+    public boolean isTouchingBedFromLeft(){
+        for(Coords iter : block.body)
+            if(bed[iter.x - 1][iter.y] == true)
+                return true;
+        return false;
+    }
+    
+    public boolean isTouchingBedFromRight(){
+        for(Coords iter : block.body)
+            if(bed[iter.x + 1][iter.y] == true)
+                return true;
+        return false;
+    }
     
 }
+
+

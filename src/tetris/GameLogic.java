@@ -19,6 +19,8 @@ public class GameLogic {
                 gameBoard.initializeBlock();
                 gameBoard.updateBoard();
                 window.repaint();
+                if(isGameOver())
+                    System.exit(0);
             }
             else{
                 gameBoard.moveBlockDown();
@@ -44,10 +46,16 @@ public class GameLogic {
     }
     
     public void gameLoop(){
-        delay = 200;
-        
+        delay = 400;
         gameBoard.initializeBlock();
         gameBoard.updateBoard();
         globalTimer.schedule(timerTask, delay, delay);
+    }
+    
+    private boolean isGameOver(){
+        for(int i = 0; i<numberOfElements; i++)
+            if(gameBoard.bed[i][0] == true)
+                return true;
+        return false;
     }
 }

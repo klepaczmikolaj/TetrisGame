@@ -3,7 +3,7 @@ package tetris;
 
 /**
  *
- * @author Mikolaj Klepacz
+ * @author kleps
  */
 public class Coords{
         int x,y;
@@ -16,5 +16,12 @@ public class Coords{
         public Coords(){
             
         }
+        
+        public void setCoords(int x, int y){
+            this.x = x;
+            this.y = y;
+        }
+
+    
 }
 
