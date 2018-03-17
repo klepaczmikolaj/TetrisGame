@@ -15,8 +15,9 @@ public class Block {
     public DIR direction;
     public BlockType blockType;
     public ArrayList<Coords> body = new ArrayList<>();
+    public ArrayList<Coords> bodyCopy;
     public Coords head = new Coords();
-    private final Random ran = new Random();
+    private final Random ran = new Random();   
     
     
     public void addElement(int x, int y){
@@ -116,7 +117,8 @@ public class Block {
             rotateLetterLRev();
         else if(blockType == BlockType.letterT)
             rotateLetterT();
-        
+    }
+    public void updateDirection(){
         if(direction == DIR.UP)
             direction = DIR.LEFT;
         else if(direction == DIR.LEFT)
@@ -125,6 +127,15 @@ public class Block {
             direction = DIR.RIGHT;
         else
             direction = DIR.UP;
+    }
+    
+    public ArrayList<Coords> copyBody(ArrayList<Coords> original){
+        ArrayList<Coords> copy = new ArrayList<>();
+        for(Coords iter : original){
+            Coords coords = new Coords(iter.x, iter.y);
+            copy.add(coords);
+        }
+        return copy;
     }
     
     private void rotateFour(){
