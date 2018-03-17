@@ -16,14 +16,11 @@ public class GameLogic {
         public void run() {
             if(gameBoard.isTouchingBedDown()){
                 gameBoard.updateBedWithCurrentBlock();
-                gameBoard.deleteFullLinesAndUpdateBed();
                 gameBoard.initializeBlock();
                 gameBoard.updateBoard();
-                if(gameBoard.isGameOver()){
-                    globalTimer.purge();
-                    globalTimer.cancel();
-                }
                 window.repaint();
+                if(isGameOver())
+                    System.exit(0);
             }
             else{
                 gameBoard.moveBlockDown();
@@ -34,33 +31,31 @@ public class GameLogic {
     }  
     
     private final DisplayWindow window;
-    private final int numberOfElementsX;
-    private final int numberOfElementsY;
+    private final int numberOfElements;
     private final int elementSize;
     private final GameBoard gameBoard;
     Timer globalTimer = new Timer();
     MyTimerTask timerTask = new MyTimerTask();
+    int delay;
     
-    public GameLogic(int numberOfElementsX, int numberOfElementsY, int elementSize){
-        this.numberOfElementsX = numberOfElementsX;
-        this.numberOfElementsY = numberOfElementsY;
+    public GameLogic(int numberOfElements, int elementSize){
+        this.numberOfElements = numberOfElements;
         this.elementSize = elementSize;
-        gameBoard = new GameBoard(this.numberOfElementsX, this.numberOfElementsY, this.elementSize);
+        gameBoard = new GameBoard(this.numberOfElements, this.elementSize);
         window = new DisplayWindow("Tetris",gameBoard);
     }
     
     public void gameLoop(){
-        while(true){
-            if(gameBoard.gameStarted)
-                break;
-            window.repaint();
-        }
-        
+        delay = 400;
         gameBoard.initializeBlock();
         gameBoard.updateBoard();
-        window.repaint();
-        globalTimer.schedule(timerTask, window.delay, window.delay);
+        globalTimer.schedule(timerTask, delay, delay);
     }
     
-    
+    private boolean isGameOver(){
+        for(int i = 0; i<numberOfElements; i++)
+            if(gameBoard.bed[i][0] == true)
+                return true;
+        return false;
+    }
 }

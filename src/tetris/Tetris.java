@@ -9,11 +9,10 @@ package tetris;
 public class Tetris {
 
     public static void main(String[] args) {
-        int numberOfElementsY = 22;
-        int numberOfElementsX = 10;
-        int elementSize = 19;
+        int numberOfElements = 20;
+        int elementSize = 20;
         
-        GameLogic game = new GameLogic(numberOfElementsX, numberOfElementsY, elementSize);
+        GameLogic game = new GameLogic(numberOfElements, elementSize);
         game.gameLoop();
     }
     
